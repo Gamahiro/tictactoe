@@ -1,22 +1,63 @@
 const gameBox = document.querySelector('#gameBox');
 
+const playerTurn = (() => {
+    'use strict';
+
+    let currentPlayerTurn;
+
+    return {
+
+        swapPlayerTurn: function() {
+            if (currentPlayerTurn == player1) {
+                currentPlayerTurn = player2;
+            }
+            else if (currentPlayerTurn == player2) {
+                currentPlayerTurn = player1;
+            }
+            else{
+                currentPlayerTurn = player1;
+            }
+        },
+        
+        getPlayerTurn: function () {
+            return currentPlayerTurn;
+        },
+
+        setPlayerTurn: function (player) {
+            currentPlayerTurn = player;
+        }
+    }
+    
+})();
 
 const gameModule = (() => {
 'use strict';
 
 let gameArray = [];
 
+
 return {
 
+
     playLoc: function(symbol, playedLoc) {
-        gameArray[playedLoc] = symbol;
-        console.log(gameArray);
+        if(gameArray[playedLoc] != " " ) {
+            console.log('location is already populated');
+        }
+        else {
+            gameArray[playedLoc] = symbol;
+            console.log(symbol, playedLoc);
+            gameModule.clearBoard();
+            gameModule.updateBoard();
+        }
+        
     },
 
     initGame: function() {
+        playerTurn.setPlayerTurn(player1);
         for(let i = 0; i < 9; i++) {
             gameArray.push(' ');
         }
+        gameModule.updateBoard();
     },
 
     updateBoard: function() {
@@ -24,16 +65,31 @@ return {
             const playBox = document.createElement('div');
             playBox.className = 'playBox';
             playBox.innerHTML =  '' + gameArray[i];
+
+
+
+            playBox.addEventListener('click', () => {
+                let playerClicked = playerTurn.getPlayerTurn();
+                this.playLoc(playerClicked.getSymbol(), [i]);
+                gameModule.clearBoard();
+                gameModule.updateBoard();
+                playerTurn.swapPlayerTurn();
+            });
             gameBox.appendChild(playBox);
-            console.log(gameArray[i]);
         }
        
     },
 
+    /* clearBoard: function() {
+        gameBox.replaceWith(gameBox.cloneNode(true));
+    } */
+
     clearBoard: function() {
         for (let i = 0; i < gameArray.length; i++) {
+            
             gameBox.removeChild(gameBox.lastChild);
         }
+        
     }
 };
 
@@ -49,17 +105,12 @@ const player = (name, symbol) => {
     return {getName, getSymbol};
 };
 
+function restartGame() {
+    gameModule.clearBoard();
+    gameModule.initGame();
+}
+
 const player1 = player('Player 1', 'X');
 const player2 = player('Player 2', 'O');
 
 gameModule.initGame();
-gameModule.playLoc(player1.getSymbol(), 5);
-gameModule.playLoc(player2.getSymbol(), 3);
-gameModule.updateBoard();
-gameModule.clearBoard();
-gameModule.playLoc(player1.getSymbol(), 1);
-gameModule.playLoc(player2.getSymbol(), 4);
-gameModule.updateBoard();
-gameModule.playLoc(player1.getSymbol(), 6);
-gameModule.clearBoard();
-gameModule.updateBoard();
