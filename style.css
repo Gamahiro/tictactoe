@@ -14,8 +14,8 @@ body {
     justify-content: center;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    border: 5px black solid;
+    gap: 12px;
+    border: 12px black solid;
     
 }
 
@@ -24,4 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: aliceblue;
+    font-size: 100px;
+    font-weight: 400;
+    user-select: none; 
 }

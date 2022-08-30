@@ -30,6 +30,11 @@ const playerTurn = (() => {
     
 })();
 
+// @todo create function to detect win
+// @todo create player win popup
+// @todo create restart game button
+
+
 const gameModule = (() => {
 'use strict';
 
