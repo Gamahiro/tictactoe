@@ -53,8 +53,6 @@ const gameModule = (() => {
             }
             else {
                 gameArray[playedLoc] = symbol;
-                console.log(symbol, playedLoc);
-                console.log(gameArray[playedLoc])
                 gameModule.clearBoard();
                 gameModule.updateBoard();
                 this.checkWin();
@@ -113,10 +111,19 @@ const gameModule = (() => {
             let winCase7 = gameArray[3] + gameArray[4] + gameArray[5];
             let winCase8 = gameArray[6] + gameArray[7] + gameArray[8];
 
+
             let player1Symbol = player1.getSymbol();
             let player2Symbol = player2.getSymbol();
 
+            let freeSpaces = gameArray.length;
+
+
+
+
             for (let i = 1; i <= 8; i++) {
+
+                
+
                 switch (eval('winCase' + i)) {
                     case player1Symbol + player1Symbol + player1Symbol:
                         console.log(player1.getName() + ' wins');
@@ -125,13 +132,23 @@ const gameModule = (() => {
                         console.log(player2.getName() + ' wins');
                         break;
                     default:
-                        console.log('no winner yet');
-                        console.log(eval('winCase' + i));
-                        console.log(player1Symbol);
+
+                }
+
+                if (gameArray[i] != ' ') {
+                    freeSpaces--;
+                    console.log('freeSpaces:' + freeSpaces);
+                }
+                if(freeSpaces == 1) {
+                    console.log(player1.getName() + ' and ' + player2.getName() + ' tied');
                 }
             }
 
 
+        },
+        gameEnd: function() {
+            //popup
+            
         }
     };
 
