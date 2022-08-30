@@ -7,8 +7,6 @@ body {
 
 #gameBox {
     background-color: rgb(0, 0, 0);
-    width: 20vw;
-    height: 20vw;
     margin-top: 10vh;
     display: grid;
     align-content: center;
@@ -25,6 +23,8 @@ body {
     justify-content: center;
     align-items: center;
     background-color: aliceblue;
+    width: 5vw;
+    height: 5vw;
     font-size: 100px;
     font-weight: 400;
     user-select: none; 
