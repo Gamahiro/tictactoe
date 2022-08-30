@@ -1,4 +1,5 @@
 const gameBox = document.querySelector('#gameBox');
+const body = document.querySelector('body');
 
 const playerTurn = (() => {
     'use strict';
@@ -62,9 +63,13 @@ const gameModule = (() => {
 
         initGame: function () {
             playerTurn.setPlayerTurn(player1);
+            gameModule.clearBoard();
+            gameArray.length = 0;
             for (let i = 0; i < 9; i++) {
                 gameArray.push(' ');
+                console.log(gameArray.length)
             }
+            
             gameModule.updateBoard();
         },
 
@@ -88,10 +93,6 @@ const gameModule = (() => {
 
         },
 
-        /* clearBoard: function() {
-            gameBox.replaceWith(gameBox.cloneNode(true));
-        } */
-
         clearBoard: function () {
             for (let i = 0; i < gameArray.length; i++) {
 
@@ -114,11 +115,7 @@ const gameModule = (() => {
 
             let player1Symbol = player1.getSymbol();
             let player2Symbol = player2.getSymbol();
-
             let freeSpaces = gameArray.length;
-
-
-
 
             for (let i = 1; i <= 8; i++) {
 
@@ -126,10 +123,11 @@ const gameModule = (() => {
 
                 switch (eval('winCase' + i)) {
                     case player1Symbol + player1Symbol + player1Symbol:
-                        console.log(player1.getName() + ' wins');
+                        this.gameEnd(player1)
                         break;
                     case player2Symbol + player2Symbol + player2Symbol:
-                        console.log(player2.getName() + ' wins');
+                        this.gameEnd(player2)
+
                         break;
                     default:
 
@@ -137,18 +135,45 @@ const gameModule = (() => {
 
                 if (gameArray[i] != ' ') {
                     freeSpaces--;
-                    console.log('freeSpaces:' + freeSpaces);
                 }
                 if(freeSpaces == 1) {
-                    console.log(player1.getName() + ' and ' + player2.getName() + ' tied');
+                    this.gameEnd(player1, player2);
                 }
             }
 
 
         },
-        gameEnd: function() {
-            //popup
+        gameEnd: function(player1, player2) {
+
+
+
+            const endGamePopup = document.createElement('div');
+            let firstPlayer = player1.getName();
+            let gameOverMsg;
+
+            if(arguments.length == 1) {
+                gameOverMsg = firstPlayer + ' wins!!'
+            }
+
+            else {
+            let secondPlayer = player2.getName();
+                gameOverMsg = firstPlayer + ' has tied with ' + secondPlayer + '!';
+            }
             
+            endGamePopup.className = 'gameOverPopup';
+            endGamePopup.innerHTML = `<div class="gameOverTitle">GAME OVER</div><div class="gameOverMsg">${gameOverMsg}</div><button class="playAgainBtn">Play again?</button>`;
+
+            body.appendChild(endGamePopup);
+
+            const playAgainBtn = document.querySelector('.playAgainBtn');
+
+            playAgainBtn.addEventListener('click', () => {
+                this.initGame();
+                endGamePopup.removeChild(playAgainBtn);
+                body.removeChild(endGamePopup);
+                console.log(gameArray);
+            });
+
         }
     };
 
