@@ -31,11 +31,6 @@ const playerTurn = (() => {
 
 })();
 
-// @todo create function to detect win
-// @todo create player win popup
-// @todo create restart game button
-
-
 const gameModule = (() => {
     'use strict';
 
@@ -181,21 +176,20 @@ const gameModule = (() => {
 
 const player = (name, symbol) => {
 
+    if(name == null || name == '') {
+        name = 'Undefined Player';
+    }
+
     const getName = () => name;
     const getSymbol = () => symbol;
 
     return { getName, getSymbol };
 };
 
-function restartGame() {
-    gameModule.clearBoard();
-    gameModule.initGame();
-}
-
 
 const player1 = player(prompt('Enter player 1 Name: '), 'X');
+
 const player2 = player(prompt('Enter player 2 Name: '), 'O');
 
 
 gameModule.initGame();
-
