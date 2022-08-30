@@ -192,8 +192,10 @@ function restartGame() {
     gameModule.initGame();
 }
 
-const player1 = player('Player 1', 'X');
-const player2 = player('Player 2', 'O');
+
+const player1 = player(prompt('Enter player 1 Name: '), 'X');
+const player2 = player(prompt('Enter player 2 Name: '), 'O');
+
 
 gameModule.initGame();
 
