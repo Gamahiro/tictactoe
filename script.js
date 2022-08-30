@@ -63,7 +63,6 @@ const gameModule = (() => {
 
         initGame: function () {
             playerTurn.setPlayerTurn(player1);
-            gameModule.clearBoard();
             gameArray.length = 0;
             for (let i = 0; i < 9; i++) {
                 gameArray.push(' ');
@@ -84,8 +83,6 @@ const gameModule = (() => {
                 playBox.addEventListener('click', () => {
                     let playerClicked = playerTurn.getPlayerTurn();
                     this.playLoc(playerClicked.getSymbol(), [i]);
-                    gameModule.clearBoard();
-                    gameModule.updateBoard();
                     playerTurn.swapPlayerTurn();
                 });
                 gameBox.appendChild(playBox);
@@ -145,6 +142,7 @@ const gameModule = (() => {
         },
         gameEnd: function(player1, player2) {
 
+            gameModule.clearBoard();
 
 
             const endGamePopup = document.createElement('div');
