@@ -61,7 +61,6 @@ const gameModule = (() => {
             gameArray.length = 0;
             for (let i = 0; i < 9; i++) {
                 gameArray.push(' ');
-                console.log(gameArray.length)
             }
             
             gameModule.updateBoard();
@@ -95,25 +94,24 @@ const gameModule = (() => {
 
         checkWin: function () {
 
-            let winCase1 = gameArray[0] + gameArray[1] + gameArray[2];
-            let winCase2 = gameArray[0] + gameArray[3] + gameArray[6]; 
-            let winCase3 = gameArray[0] + gameArray[4] + gameArray[8];
-            let winCase4 = gameArray[1] + gameArray[4] + gameArray[7];
-            let winCase5 = gameArray[2] + gameArray[4] + gameArray[6];
-            let winCase6 = gameArray[2] + gameArray[5] + gameArray[8];
-            let winCase7 = gameArray[3] + gameArray[4] + gameArray[5];
-            let winCase8 = gameArray[6] + gameArray[7] + gameArray[8];
-
+            let winCase = [];
+            winCase[0] = gameArray[0] + gameArray[1] + gameArray[2];
+            winCase[1] = gameArray[0] + gameArray[3] + gameArray[6]; 
+            winCase[2] = gameArray[0] + gameArray[4] + gameArray[8];
+            winCase[3] = gameArray[1] + gameArray[4] + gameArray[7];
+            winCase[4] = gameArray[2] + gameArray[4] + gameArray[6];
+            winCase[5] = gameArray[2] + gameArray[5] + gameArray[8];
+            winCase[6] = gameArray[3] + gameArray[4] + gameArray[5];
+            winCase[7] = gameArray[6] + gameArray[7] + gameArray[8];
 
             let player1Symbol = player1.getSymbol();
             let player2Symbol = player2.getSymbol();
             let freeSpaces = gameArray.length;
 
-            for (let i = 1; i <= 8; i++) {
+            for (let i = 0; i <= 7; i++) {
 
-                
 
-                switch (eval('winCase' + i)) {
+                switch (winCase[i]) {
                     case player1Symbol + player1Symbol + player1Symbol:
                         this.gameEnd(player1)
                         break;
@@ -164,7 +162,6 @@ const gameModule = (() => {
                 this.initGame();
                 endGamePopup.removeChild(playAgainBtn);
                 body.removeChild(endGamePopup);
-                console.log(gameArray);
             });
 
         }
